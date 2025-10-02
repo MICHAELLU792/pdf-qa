@@ -21,7 +21,10 @@ def qa_agent(openai_api_key, memory, uploaded_file, question):
         separators=["\n", "。", "！", "？", "，", "、", ""]
     )
     texts = text_splitter.split_documents(docs)
-    embeddings_model = OpenAIEmbeddings()
+    embeddings_model = OpenAIEmbeddings(
+        api_key=openai_api_key,
+        model="text-embedding-3-large"
+    )
     #文檔內容向量化進資料庫(文檔列表, 嵌入模型)
     db = FAISS.from_documents(texts, embeddings_model)
     #檢索器
